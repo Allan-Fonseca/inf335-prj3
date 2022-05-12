@@ -10,10 +10,10 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/Allan-Fonseca/inf335-prj3'
+                git branch: 'main', url: 'https://github.com/Allan-Fonseca/inf335-prj3'
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh "cd inf335-prj3; mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -23,8 +23,8 @@ pipeline {
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
                 success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
+                    junit '**/inf335-prj3/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'inf335-prj3/target/*.jar'
                 }
             }
         }
